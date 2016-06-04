@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<b:beans xmlns:b="http://www.springframework.org/schema/beans"
+         xmlns="http://www.springframework.org/schema/security"
+         xmlns:p="http://www.springframework.org/schema/p"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:context="http://www.springframework.org/schema/context"
+         xmlns:util="http://www.springframework.org/schema/util"
+         xmlns:aop="http://www.springframework.org/schema/aop"
+         xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+				<http auto-config="true">
+					<intercept-url pattern="/admin**" access="ROLE_USER" />
+				</http>
+
+				<authentication-manager>
+				  <authentication-provider>
+						<user-service>
+								<user name="admin" password="admin" authorities="ROLE_USER" />
+				    </user-service>
+				  </authentication-provider>
+					<authentication-provider>
+							<user-service>
+								<user name="58045" password="58045" authorities="ROLE_USER" />
+							</user-service>
+					</authentication-provider>
+					<authentication-provider>
+							<user-service>
+								<user name="ss59022" password="ss59022" authorities="ROLE_USER" />
+							</user-service>
+					</authentication-provider>
+				</authentication-manager>
+
+    <!-- <http entry-point-ref="casEntryPoint">
+        <intercept-url pattern="/ememployees/findEmpNameByEmpCode/**" access="permitAll or isAuthenticated()" />
+        <intercept-url pattern="/ememployees/findEMNameByUserName/**" access="permitAll or isAuthenticated()" />
+        <intercept-url pattern="/ememployees/findAppRoleByUserName/**" access="permitAll or isAuthenticated()" />
+        <intercept-url pattern="/ememployees/findEmployeeByUserName/**" access="permitAll or isAuthenticated()" />
+        <intercept-url pattern="/ememployees/findRoleCode/**" access="permitAll or isAuthenticated()" />
+        <intercept-url pattern="/ememployees/findEmployeeByTextLov/**" access="permitAll or isAuthenticated()" />
+        <intercept-url pattern="/ememployees/GetEmpByTeamID/**" access="permitAll or isAuthenticated()" />
+        <intercept-url pattern="/emteams/findTeamAll/**" access="permitAll or isAuthenticated()" />
+        <intercept-url pattern="/ememployees/findEmployeeByEmpCodeArray/**" access="permitAll or isAuthenticated()" />
+        <intercept-url pattern="/ememployees/findEmployeeByEmpCode/**" access="permitAll or isAuthenticated()" />
+        <intercept-url pattern="/ememployees/findAllEmployeeByEmpCodeArray/**" access="permitAll or isAuthenticated()" />
+        <intercept-url pattern="/emteams/findAllEmployeeByTeamId/**" access="permitAll or isAuthenticated()" />
+
+        <intercept-url pattern="/**" access="isAuthenticated()" />
+        <custom-filter ref="requestSingleLogoutFilter" before="LOGOUT_FILTER"/>
+        <custom-filter ref="singleLogoutFilter" before="CAS_FILTER"/>
+        <custom-filter ref="casFilter" position="CAS_FILTER" />
+        <csrf disabled="true"/>
+    </http> -->
+
+    <!-- <b:bean id="serviceProperties"
+            class="org.springframework.security.cas.ServiceProperties"
+            p:service="http://${cas.service.host}/${cas.module}/login/cas"
+            p:authenticateAllArtifacts="true"/>
+    <b:bean id="casEntryPoint"
+            class="org.springframework.security.cas.web.CasAuthenticationEntryPoint"
+            p:serviceProperties-ref="serviceProperties" p:loginUrl="https://${cas.server.host}/cas-server/login" />
+
+    <b:bean id="casAuthProvider" class="org.springframework.security.cas.authentication.CasAuthenticationProvider"
+            p:serviceProperties-ref="serviceProperties"
+            p:key="casAuthProviderKey">
+        <b:property name="authenticationUserDetailsService">
+            <b:bean class="com.app2.app2t.service.UserService" />
+        </b:property>
+        <b:property name="ticketValidator">
+            <b:bean
+                    class="org.jasig.cas.client.validation.Cas20ProxyTicketValidator"
+                    p:acceptAnyProxy="true"
+                    p:proxyGrantingTicketStorage-ref="pgtStorage">
+                <b:constructor-arg value="https://${cas.server.host}/cas-server" />
+            </b:bean>
+        </b:property>
+        <b:property name="statelessTicketCache">
+            <b:bean class="org.springframework.security.cas.authentication.EhCacheBasedTicketCache">
+                <b:property name="cache">
+                    <b:bean id="ehcache" class="net.sf.ehcache.Cache"
+                            init-method="initialise"
+                            destroy-method="dispose">
+                        <b:constructor-arg value="casTickets"/>
+                        <b:constructor-arg value="50"/>
+                        <b:constructor-arg value="true"/>
+                        <b:constructor-arg value="false"/>
+                        <b:constructor-arg value="3600"/>
+                        <b:constructor-arg value="900"/>
+                        <b:property name="cacheManager">
+                            <b:bean class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"/>
+                        </b:property>
+                    </b:bean>
+                </b:property>
+            </b:bean>
+        </b:property>
+    </b:bean> -->
+
+
+    <!-- <authentication-manager alias="authManager" erase-credentials="false">
+        <authentication-provider ref="casAuthProvider" />
+    </authentication-manager> -->
+
+    <!-- <b:bean id="casFilter"
+            class="org.springframework.security.cas.web.CasAuthenticationFilter"
+            p:authenticationManager-ref="authManager"
+            p:serviceProperties-ref="serviceProperties"
+            p:proxyGrantingTicketStorage-ref="pgtStorage"
+            p:proxyReceptorUrl="/login/cas/proxyreceptor">
+        <b:property name="authenticationDetailsSource">
+            <b:bean class="org.springframework.security.cas.web.authentication.ServiceAuthenticationDetailsSource">
+                <b:constructor-arg ref="serviceProperties"/>
+            </b:bean>
+        </b:property>
+        <b:property name="authenticationFailureHandler">
+            <b:bean class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler"
+                    p:defaultFailureUrl="/dataAccessFailure.jspx"/>
+        </b:property>
+    </b:bean>     -->
+
+    <!-- <b:bean id="singleLogoutFilter" class="org.jasig.cas.client.session.SingleSignOutFilter"/>
+    <b:bean id="requestSingleLogoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter"
+            p:filterProcessesUrl="/resources/j_spring_security_logout">
+        <b:constructor-arg value="https://${cas.server.host}/cas-server/logout?service=http://${cas.service.host}/${cas.module}/"/>
+        <b:constructor-arg>
+            <b:bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler" p:invalidateHttpSession="true" p:clearAuthentication="true"/>
+        </b:constructor-arg>
+    </b:bean>
+    <b:bean id="pgtStorage" class="org.jasig.cas.client.proxy.ProxyGrantingTicketStorageImpl"/> -->
+</b:beans>

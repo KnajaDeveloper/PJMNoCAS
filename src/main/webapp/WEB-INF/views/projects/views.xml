@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="projects/list">
+        <put-attribute name="body" value="/WEB-INF/views/projects/list.jspx"/>
+    </definition>
+<definition extends="default" name="projects/show">
+        <put-attribute name="body" value="/WEB-INF/views/projects/show.jspx"/>
+    </definition>
+<definition extends="default" name="projects/create">
+        <put-attribute name="body" value="/WEB-INF/views/projects/create.jspx"/>
+    </definition>
+<definition extends="default" name="projects/update">
+        <put-attribute name="body" value="/WEB-INF/views/projects/update.jspx"/>
+    </definition>
+    <definition extends="default" name="projects/searchproject">
+        <put-attribute name="body" value="/WEB-INF/views/projects/searchproject.jspx"/>
+    </definition>
+    <definition extends="default" name="projects/createproject">
+        <put-attribute name="body" value="/WEB-INF/views/projects/createproject.jspx"/>
+    </definition>
+    <definition extends="default" name="projects/progressproject">
+        <put-attribute name="body" value="/WEB-INF/views/projects/progressproject.jspx"/>
+    </definition>
+    <definition extends="default" name="projects/editproject">
+        <put-attribute name="body" value="/WEB-INF/views/projects/editproject.jspx"/>
+    </definition>
+</tiles-definitions>

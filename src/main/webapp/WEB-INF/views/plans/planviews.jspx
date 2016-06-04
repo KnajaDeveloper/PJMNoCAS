@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:component="urn:jsptagdir:/WEB-INF/tags/component" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8"/>
+	<jsp:output omit-xml-declaration="yes"/>
+
+	<c:set var="LABEL_PROJECT_NAME"><spring:message javaScriptEscape="true" code="L0008"/></c:set>
+	<c:set var="LABEL_MODULE"><spring:message javaScriptEscape="true" code="L0009"/></c:set>
+	<c:set var="LABEL_TEAM"><spring:message javaScriptEscape="true" code="L0031"/></c:set>
+	<c:set var="LABEL_START_DATE"><spring:message javaScriptEscape="true" code="L0010"/></c:set>
+	<c:set var="LABEL_END_DATE"><spring:message javaScriptEscape="true" code="L0011"/></c:set>
+	<c:set var="LABEL_EMPLOYEE_NAME"><spring:message javaScriptEscape="true" code="L0003"/></c:set>
+	<c:set var="LABEL_TASK_NAME"><spring:message javaScriptEscape="true" code="L0034"/></c:set>
+	<c:set var="LABEL_TASK_TYPE_NAME"><spring:message javaScriptEscape="true" code="L0071"/></c:set>
+
+	<c:set var="BUTTON_SEARCH"><spring:message javaScriptEscape="true" code="B0002"/></c:set>
+
+	<c:set var="MESSAGE_COMPLETE_THIS_FIELD"><spring:message javaScriptEscape="true" code="M0002"/></c:set>
+	<c:set var="MESSAGE_COMPLETE_DATE"><spring:message javaScriptEscape="true" code="M0011"/></c:set>
+	<c:set var="MESSAGE_DATE_FORMAT_INVALID" scope="request"><spring:message code="M0032"/></c:set>
+	<c:set var="MS_DATA_NOT_FOUND" scope="request"><spring:message code="M0018"/></c:set>
+
+	<c:set var="LABEL_VIEW_PLAN"><spring:message javaScriptEscape="true" code="L0099"/></c:set>
+	<c:set var="LABEL_EMPLOYEE_SCHEDULE"><spring:message javaScriptEscape="true" code="L0100"/></c:set>
+	<c:set var="LABEL_EMPTY_TASK"><spring:message javaScriptEscape="true" code="L0101"/></c:set>
+	<c:set var="LABEL_YEAR_CREATE_PROJECT"><spring:message javaScriptEscape="true" code="L0102"/></c:set>
+	<c:set var="MESSAGE_NUMBER_ONLY"><spring:message javaScriptEscape="true" code="L0103"/></c:set>
+	<c:set var="LABEL_SUN"><spring:message javaScriptEscape="true" code="L0104"/></c:set>
+	<c:set var="LABEL_MON"><spring:message javaScriptEscape="true" code="L0105"/></c:set>
+	<c:set var="LABEL_TUE"><spring:message javaScriptEscape="true" code="L0106"/></c:set>
+	<c:set var="LABEL_WED"><spring:message javaScriptEscape="true" code="L0107"/></c:set>
+	<c:set var="LABEL_THU"><spring:message javaScriptEscape="true" code="L0108"/></c:set>
+	<c:set var="LABEL_FRI"><spring:message javaScriptEscape="true" code="L0109"/></c:set>
+	<c:set var="LABEL_SAT"><spring:message javaScriptEscape="true" code="L0110"/></c:set>
+	<c:set var="LABEL_JAN"><spring:message javaScriptEscape="true" code="L0111"/></c:set>
+	<c:set var="LABEL_FEB"><spring:message javaScriptEscape="true" code="L0112"/></c:set>
+	<c:set var="LABEL_MAR"><spring:message javaScriptEscape="true" code="L0113"/></c:set>
+	<c:set var="LABEL_APR"><spring:message javaScriptEscape="true" code="L0114"/></c:set>
+	<c:set var="LABEL_MAY"><spring:message javaScriptEscape="true" code="L0115"/></c:set>
+	<c:set var="LABEL_JUN"><spring:message javaScriptEscape="true" code="L0116"/></c:set>
+	<c:set var="LABEL_JUL"><spring:message javaScriptEscape="true" code="L0117"/></c:set>
+	<c:set var="LABEL_AUG"><spring:message javaScriptEscape="true" code="L0118"/></c:set>
+	<c:set var="LABEL_SEP"><spring:message javaScriptEscape="true" code="L0119"/></c:set>
+	<c:set var="LABEL_OCT"><spring:message javaScriptEscape="true" code="L0120"/></c:set>
+	<c:set var="LABEL_NOV"><spring:message javaScriptEscape="true" code="L0121"/></c:set>
+	<c:set var="LABEL_DEC"><spring:message javaScriptEscape="true" code="L0122"/></c:set>
+
+	<style>
+		.btnEmployee{
+			position:absolute;
+			top:25px;
+		}
+		.nameTask{
+			text-shadow: 1px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+		}
+	</style>
+
+	<script>
+		var Label = {};
+		Label.Project_name = '${LABEL_PROJECT_NAME}';
+		Label.Employee_Name = '${LABEL_EMPLOYEE_NAME}';
+		Label.Module = '${LABEL_MODULE}';
+		Label.Sun = '${LABEL_SUN}';
+		Label.Mon = '${LABEL_MON}';
+		Label.Tue = '${LABEL_TUE}';
+		Label.Wed = '${LABEL_WED}';
+		Label.Thu = '${LABEL_THU}';
+		Label.Fri = '${LABEL_FRI}';
+		Label.Sat = '${LABEL_SAT}';
+		Label.Jan = '${LABEL_JAN}';
+		Label.Feb = '${LABEL_FEB}';
+		Label.Mar = '${LABEL_MAR}';
+		Label.Apr = '${LABEL_APR}';
+		Label.May = '${LABEL_MAY}';
+		Label.Jun = '${LABEL_JUN}';
+		Label.Jul = '${LABEL_JUL}';
+		Label.Aug = '${LABEL_AUG}';
+		Label.Sep = '${LABEL_SEP}';
+		Label.Oct = '${LABEL_OCT}';
+		Label.Nov = '${LABEL_NOV}';
+		Label.Dec = '${LABEL_DEC}';
+		var Message = {};
+		Message.Complete_this_feld = "${MESSAGE_COMPLETE_THIS_FIELD}"
+		Message.Number_only = '${MESSAGE_NUMBER_ONLY}';
+		Message.MESSAGE_COMPLETE_DATE = '${MESSAGE_COMPLETE_DATE}';
+		Message.DATE_FORMAT = '${MESSAGE_DATE_FORMAT_INVALID}';
+		Message.MS_DATA_NOT_FOUND = '${MS_DATA_NOT_FOUND}';
+
+		function slidePlan(){
+			var delay = 500;
+			if($("#panelEmployee").attr("option")!="show"){
+				$("#panelEmployee").attr("option","show");
+//				$("#panelPlan").show('slide',{ direction: 'left'},500);
+				$("#panelPlan").show();
+				$("#panelPlan").animate({width: '+=33%'},delay,function(){
+//					$("#panelPlan").show();
+				});
+				$("#panelEmployee").animate({width: '-=33%'},delay);
+				$("#xxxx").removeClass("fa-rotate-90");
+				$("#xxxx").hide();
+			}
+			else{
+				$("#panelEmployee").attr("option","hide");
+				$("#panelPlan").animate({width: '-=33%'},delay,function(){
+					$("#panelPlan").hide();
+					$("#btn").show();
+				});
+				$("#panelEmployee").animate({width: '+=33%'},delay);
+				$("#xxxx").addClass("fa-rotate-90");
+				$("#xxxx").show();
+			}
+		}
+	</script>
+
+	<spring:url value="/resources/scripts/fullcalendar/lib/moment.min.js" var="moment_js"/>
+    <spring:url value="/resources/scripts/fullcalendar/fullcalendar.min.js" var="fullcalendar_js"/>
+    <script src="${moment_js}" type="text/javascript"><!--Not Empty --></script>
+    <script src="${fullcalendar_js}" type="text/javascript"><!--Not Empty --></script>
+
+    <input type="hidden" class="datepicker"/>
+	<input type="hidden" class="datetimepicker"/>
+
+	<div id="containerData" name="cotainerData" class="col-md-12">
+		<div class="panel panel-primary">
+			<div class="panel-heading">${LABEL_VIEW_PLAN}</div><br/>
+			<div class="panel-body">
+				<form class="form-horizontal">
+					<div name="container_Project" class="form-group ">
+						<label class="col-sm-4 control-label">${LABEL_PROJECT_NAME}</label>
+						<div class="col-sm-5">
+							<component:LovProject id="ddlProject"/>
+						</div>
+					</div>
+					<div name="container_Module" class="form-group">
+						<label class="col-sm-4 control-label">${LABEL_MODULE}</label>
+						<div class="col-sm-5">
+							<select id="ddlModule" class="form-control">
+								<option value="null"><!--Not Empty--></option>
+							</select>
+						</div>
+					</div>
+					<div name="container_Team" class="form-group">
+						<label class="col-sm-4 control-label">${LABEL_TEAM}</label>
+						<div class="col-sm-5">
+							<select id="ddlTeam" class="form-control">
+								<option value="null"><!--Not Empty--></option>
+							</select>
+						</div>
+					</div>
+					<div name="container_Date" class="form-group">
+						<div class="form-inline">
+							<label class="col-sm-4 control-label required">${LABEL_START_DATE}</label>
+							<div class='col-sm-2'>
+								<div class='input-group'>
+									<input class="form-control" type="text" id="dateStart" name="dateStart" placeholder="dd/mm/yyyy" data-placement="bottom"><!--Not Empty--></input>
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-calendar" style="cursor:pointer" onclick="$('#dateStart').focus();"></span>
+									</span>
+								</div>
+							</div>
+							<label class="col-sm-1 control-label required">${LABEL_END_DATE}</label>
+							<div class='col-sm-2'>
+								<div class='input-group'>
+									<input class="form-control" type="text" id="dateEnd" onchange="checkDateFormat($(this), Message.DATE_FORMAT,'')" name="dateEnd" placeholder="dd/mm/yyyy" data-placement="bottom"></input>
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-calendar" style="cursor:pointer" onclick="$('#dateEnd').focus();"></span>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div name="btnSearchAndReset" class="form-group">
+						<div class="col-sm-6"><!--Not Empty --></div>
+						<button id="btnSearch" type="button" class="btn btn-primary">${BUTTON_SEARCH}</button>
+						<!--<button id="btnReset" type="button" class="btn btn-danger" style='margin:10px'>Reset</button>-->
+					</div>			
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-horizontal col-sm-12 display:inline-block">
+		<div name="panelEmployee" id="panelEmployee" class=""  style="margin-top: 15px; display:inline-block; width: 64%;" option="show">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					${LABEL_EMPLOYEE_SCHEDULE}
+				</div>
+				<div style="width: 100%; height: 500px; overflow-x: scroll; overflow-y: scroll; scrollbar-arrow-color:blue; scrollbar-face-color: #e7e7e7; scrollbar-3dlight-color: #a0a0a0; scrollbar-darkshadow-color:#888888">
+					<table id="tableData" class="table table-bordered text-center">
+						<tr id="tbSevenDay">
+							<th class="text-center" style='min-width:120px;'><!--Not--></th>
+						</tr>
+						<tr id="tbDate">
+							<td class="text-center" style='min-width:120px;'>${LABEL_EMPLOYEE_NAME}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="btnEmployee" style="display:inline-block; width: 2%;">
+			<span id="xxxx" class="fa fa-bars icon pull-right" style="cursor:pointer; margin-top: 5px;" onclick="slidePlan(this)">
+				<!--Not Empty-->
+			</span>
+		</div>
+		<div name="panelPlan" id='panelPlan' class="pull-right"  style="margin-top: 15px; display:inline-block; width: 33%;">
+				<div class="panel panel-primary">
+				<div class="panel-heading">
+					  ${LABEL_EMPTY_TASK}
+					<span class="fa fa-bars icon pull-left" style="cursor:pointer; margin-top: 5px;" onclick="slidePlan(this)">
+						<!--Not Empty-->
+					</span>
+				</div>
+				<div style="width: 100%; height: 500px; overflow-y: scroll; scrollbar-arrow-color:blue; scrollbar-face-color: #e7e7e7; scrollbar-3dlight-color: #a0a0a0; scrollbar-darkshadow-color:#888888">
+					<table id="tableEmpty" class="table table-bordered">
+						<thead>
+						<tr>
+							<th class="text-center" style="vertical-align: middle;">${LABEL_TASK_NAME}</th>
+							<th class="text-center" style="vertical-align: middle;">${LABEL_MODULE}</th>
+							<th class="text-center" style="vertical-align: middle;">${LABEL_TASK_TYPE_NAME}</th>
+						</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<spring:url value="/resources/scripts/component/UtilDate.js" var="UtilDate"/>
+	<script src="${UtilDate}" type="text/javascript"><!--Not Empty --></script>
+
+	<spring:url value="/resources/scripts/component/UtilForm.js" var="UtilForm"/>
+	<script src="${UtilForm}" type="text/javascript"><!--Not Empty --></script>
+
+	<spring:url value="/resources/scripts/Plan/schedulePlan.js" var="schedulePlan"/>
+	<script src="${schedulePlan}" type="text/javascript"><!--Not Empty--></script>	
+
+	<spring:url value="/resources/scripts/Plan/btnSearch.js" var="btnSearch"/>
+	<script src="${btnSearch}" type="text/javascript"><!--Not Empty--></script>
+
+	<!-- Script Calendar -->
+	<spring:url value="/resources/scripts/Plan/dateTimeEvent.js" var="dateTimeEvent"/>
+	<script src="${dateTimeEvent}" type="text/javascript"><!--Not Empty--></script>
+
+	<spring:url value="/resources/scripts/component/UtilLovProject.js" var="UtilLovProject"/>
+	<script src="${UtilLovProject}" type="text/javascript"><!--Not Empty --></script>
+
+</div>
