@@ -1,0 +1,658 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+    xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"
+    xmlns:jsp="http://java.sun.com/JSP/Page"
+    xmlns:spring="http://www.springframework.org/tags"
+    xmlns:component="urn:jsptagdir:/WEB-INF/tags/component" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+
+    <style>
+        label.control-label {
+            width: 100%;
+            color: #000;
+        }
+        th.text-center {
+            color: #000;
+        }
+        #thChkAll {
+            width: 7%;
+        }
+        #thEditProgram {
+            width: 10%;
+        }
+        #thProgramCode {
+            width: 28%;
+        }
+        #thProgramName {
+            width: 55%;
+        }
+        #thChkAllTask {
+            width: 5%;
+        }
+        #thEditTask {
+            width: 7%;
+        }
+        #thTaskCode {
+            width: 15%;
+        }
+        #thTaskName {
+            width: 33%;
+        }
+        #thNumberCost {
+            width: 15%;
+        }
+        #thProgress {
+            width: 25%;
+        }
+        input#txtPositionCode.form-control {
+            width: 100%
+        }
+        input#txtPositionName.form-control {
+            width: 100%
+        }
+        span.input-group-addon {
+            padding: 0 12px;
+        }
+        .btn .caret {
+            margin-left: 50%;
+        }
+        div.progress-bar{
+            color: #000;
+        }
+        td.text-center {
+            color: #000;
+        }
+    </style>
+
+    <script>
+        var moduleProjectID = '${moduleProjectID}';
+    </script>
+
+    <input type="hidden" class="datetimepicker"/>
+    <input type="hidden" class="datepicker"/>
+
+    <c:set var="LABEL_DETAILS_MODULES" scope="request"><spring:message code="L0075"/></c:set>
+    <c:set var="LABEL_MODULE_NEME" scope="request"><spring:message code="L0065"/></c:set>
+    <c:set var="LABEL_INITIAL" scope="request"><spring:message code="L0076"/></c:set>
+    <c:set var="LABEL_TOTAL_COST" scope="request"><spring:message code="L0048"/></c:set>
+    <c:set var="LABEL_START_DATE" scope="request"><spring:message code="L0046"/></c:set>
+    <c:set var="LABEL_MANAGER" scope="request"><spring:message code="L0077"/></c:set>
+    <c:set var="LABEL_BALANCE_TOTAL_COST" scope="request"><spring:message code="L0078"/></c:set>
+    <c:set var="LABEL_END_DATE" scope="request"><spring:message code="L0079"/></c:set>
+    <c:set var="LABEL_ADD_PROGRAM" scope="request"><spring:message code="L0080"/></c:set>
+    <c:set var="LABEL_PROGRAM_CODE" scope="request"><spring:message code="L0081"/></c:set>
+    <c:set var="LABEL_PROGRAM_NAME" scope="request"><spring:message code="L0082"/></c:set>
+    <c:set var="LABEL_ADD_TASK" scope="request"><spring:message code="L0036"/></c:set>
+    <c:set var="LABEL_TASK_CODE" scope="request"><spring:message code="L0033"/></c:set>
+    <c:set var="LABEL_TASK_NAME" scope="request"><spring:message code="L0034"/></c:set>
+    <c:set var="LABEL_POINT" scope="request"><spring:message code="L0049"/></c:set>
+    <c:set var="LABEL_TYPE_TASK" scope="request"><spring:message code="L0083"/></c:set>
+    <c:set var="LABEL_PROGRESS" scope="request"><spring:message code="L0037"/></c:set>
+    <c:set var="LABEL_ATTACHMENTS" scope="request"><spring:message code="L0084"/></c:set>
+    <c:set var="LABEL_DETAILS" scope="request"><spring:message code="L0085"/></c:set>
+    <c:set var="LABEL_EDIT" scope="request"><spring:message code="L0035"/></c:set>
+    <c:set var="LABEL_EDIT_PROGRAM" scope="request"><spring:message code="L0086"/></c:set>
+    <c:set var="LABEL_EDIT_TASK" scope="request"><spring:message code="L0087"/></c:set>
+    <c:set var="LABEL_FILE_SIZE_OF_NO_MORE_THAN_100_MB" scope="request"><spring:message code="L0138"/></c:set>
+    <c:set var="LABEL_TASK_FOLLOWER" scope="request"><spring:message code="L0139"/></c:set>
+    <c:set var="LABEL_TASK_IMPORTANCE" scope="request"><spring:message code="L0140"/></c:set>
+
+    <c:set var="BUTTON_ADD_PROGRAM" scope="request"><spring:message code="B0015"/></c:set>
+    <c:set var="BUTTON_ADD_TASK" scope="request"><spring:message code="B0016"/></c:set>
+    <c:set var="BUTTON_REMOVE_SELECTED" scope="request"><spring:message code="B0004"/></c:set>
+    <c:set var="BUTTON_SAVE" scope="request"><spring:message code="B0006"/></c:set>
+    <c:set var="BUTTON_NEXT" scope="request"><spring:message code="B0008"/></c:set>
+    <c:set var="BUTTON_CANCEL" scope="request"><spring:message code="B0007"/></c:set>
+    <c:set var="BUTTON_SELECT_FILE" scope="request"><spring:message code="B0017"/></c:set>
+    <c:set var="BUTTON_DOWNLOAD_FILE" scope="request"><spring:message code="B0018"/></c:set>
+    <c:set var="BUTTON_DELETE" scope="request"><spring:message code="B0014"/></c:set>
+
+    <c:set var="MSG_DATA_NOT_FOUND" scope="request"><spring:message code="M0018"/></c:set>
+    <c:set var="MSG_PLEASE_ENTER_THE_PROGRAM_CODE_AS_a_TO_z_OR_A_TO_Z_OR_0_TO_9" scope="request"><spring:message code="M0022"/></c:set>
+    <c:set var="MSG_PLEASE_ENTER_THE_TASK_CODE_AS_a_TO_z_OR_A_TO_Z_OR_0_TO_9" scope="request"><spring:message code="M0023"/></c:set>
+    <c:set var="MSG_PLEASE_COMPLETE_THIS_FIEID" scope="request"><spring:message code="M0002"/></c:set>
+    <c:set var="MSG_SAVE_SUCCESS" scope="request"><spring:message code="M0001"/></c:set>
+    <c:set var="MSG_SAVE_FAILED" scope="request"><spring:message code="M0019"/></c:set>
+    <c:set var="MSG_TOTAL_COST_OVER_BALANCE_TOTAL_COST" scope="request"><spring:message code="M0024"/></c:set>
+    <c:set var="MSG_PLEASE_ENTER_A_NEW_PROGRAM_CODE" scope="request"><spring:message code="M0025"/></c:set>
+    <c:set var="MSG_PLEASE_ENTER_A_NEW_TASK_CODE" scope="request"><spring:message code="M0026"/></c:set>
+    <c:set var="MSG_NO_INFORMATION_CHANGED" scope="request"><spring:message code="M0012"/></c:set>
+    <c:set var="MSG_EDIT_SUCCESSFULLY" scope="request"><spring:message code="M0013"/></c:set>
+    <c:set var="MSG_EDIT_UNSUCCESSFUL" scope="request"><spring:message code="M0021"/></c:set>
+    <c:set var="MSG_PLEASE_SELECT_THE_DATA_TO_BE_DELETED" scope="request"><spring:message code="M0003"/></c:set>
+    <c:set var="MSG_DO_YOU_WANT_TO_REMOVE_THE_SELECTED_ITEMS" scope="request"><spring:message code="M0004"/></c:set>
+    <c:set var="MSG_DELETE_SUCCESS" scope="request"><spring:message code="M0005"/></c:set>
+    <c:set var="MSG_DELETE_FAILED" scope="request"><spring:message code="M0006"/></c:set>
+    <c:set var="MSG_LIST" scope="request"><spring:message code="M0027"/></c:set>
+    <c:set var="MSG_DATA_IS_USE" scope="request"><spring:message code="M0028"/></c:set>
+    <c:set var="MSG_WANT_TO_CANCEL_EDITING_THE_DATA_HAS_CHANGED_OR_NOT" scope="request"><spring:message code="M0031"/></c:set>
+    <c:set var="MSG_PLEASE_ENTER_ONLY_NUMBERS" scope="request"><spring:message code="M0050"/></c:set>
+    <c:set var="MSG_PLEASE_ENTER_THE_PROGRESS_BETWEEN_0_TO_100" scope="request"><spring:message code="M0017"/></c:set>
+    <c:set var="MSG_DATE_INCOLLECT" scope="request"><spring:message code="M0032"/></c:set>
+    <c:set var="MSG_YOU_WANT_TO_SAVE_DATA" scope="request"><spring:message code="M0051"/></c:set>
+    <c:set var="MSG_THIS_FILE_IS_ALREADY_TO_DAVE_THE_FILE_TO_REPEAT_IT" scope="request"><spring:message code="M0059"/></c:set>
+    <c:set var="MSG_FILE_NOT_FOUND" scope="request"><spring:message code="M0062"/></c:set>
+    <c:set var="MSG_DATA_ALL_IN_USED" scope="request"><spring:message code="M0061"/></c:set>
+    <c:set var="MSG_PLEASE_ENTER_NO_MORE_THAN_FOUR_DECIMAL_NUMBERS" scope="request"><spring:message code="M0065"/></c:set>
+    <c:set var="MSG_PLEASE_ENTER_A_ONLY_POSITIVE_INTEGER_NUMBERS" scope="request"><spring:message code="M0067"/></c:set>
+    <c:set var="MSG_YOU_SELECT_A_FILE_SIZE_OVER_LIMIT" scope="request"><spring:message code="M0068"/></c:set>
+    <c:set var="MSG_IT_IS_HAS_A_SAME_NAMES" scope="request"><spring:message code="M0035"/></c:set>
+    <c:set var="MSG_NOT_UPDATED_DATA_PLEASE_REFRESH_AND_CONTINUE_YOUR_TRANSACTION" scope="request"><spring:message code="M0072"/></c:set>
+    <c:set var="MSG_CAN_NOT_PUT_MARK_INTO_IN_DETAILS" scope="request"><spring:message code="M0073"/></c:set>
+    
+    <script type="text/javascript">
+        var Label = {};
+        var Button = {};
+        var Message = {};
+
+        Label.LABEL_EDIT_PROGRAM = '${LABEL_EDIT_PROGRAM}';
+        Label.LABEL_TYPE_TASK = '${LABEL_TYPE_TASK}';
+        Label.LABEL_EDIT_TASK = '${LABEL_EDIT_TASK}';
+        Label.LABEL_ADD_PROGRAM = '${LABEL_ADD_PROGRAM}';
+        Label.LABEL_ADD_TASK = '${LABEL_ADD_TASK}';
+        Label.LABEL_POINT = '${LABEL_POINT}';
+
+        Button.BUTTON_DELETE = '${BUTTON_DELETE}';
+
+        Message.MSG_DATA_NOT_FOUND = '${MSG_DATA_NOT_FOUND}';
+        Message.MSG_PLEASE_ENTER_THE_PROGRAM_CODE_AS_a_TO_z_OR_A_TO_Z_OR_0_TO_9 = '${MSG_PLEASE_ENTER_THE_PROGRAM_CODE_AS_a_TO_z_OR_A_TO_Z_OR_0_TO_9}';
+        Message.MSG_PLEASE_ENTER_THE_TASK_CODE_AS_a_TO_z_OR_A_TO_Z_OR_0_TO_9 = '${MSG_PLEASE_ENTER_THE_TASK_CODE_AS_a_TO_z_OR_A_TO_Z_OR_0_TO_9}';
+        Message.MSG_PLEASE_COMPLETE_THIS_FIEID = '${MSG_PLEASE_COMPLETE_THIS_FIEID}';
+        Message.MSG_SAVE_SUCCESS = '${MSG_SAVE_SUCCESS}';
+        Message.MSG_SAVE_FAILED = '${MSG_SAVE_FAILED}';
+        Message.MSG_TOTAL_COST_OVER_BALANCE_TOTAL_COST = '${MSG_TOTAL_COST_OVER_BALANCE_TOTAL_COST}';
+        Message.MSG_PLEASE_ENTER_A_NEW_PROGRAM_CODE = '${MSG_PLEASE_ENTER_A_NEW_PROGRAM_CODE}';
+        Message.MSG_PLEASE_ENTER_A_NEW_TASK_CODE = '${MSG_PLEASE_ENTER_A_NEW_TASK_CODE}';
+        Message.MSG_NO_INFORMATION_CHANGED = '${MSG_NO_INFORMATION_CHANGED}';
+        Message.MSG_EDIT_SUCCESSFULLY = '${MSG_EDIT_SUCCESSFULLY}';
+        Message.MSG_EDIT_UNSUCCESSFUL = '${MSG_EDIT_UNSUCCESSFUL}';
+        Message.MSG_PLEASE_SELECT_THE_DATA_TO_BE_DELETED = '${MSG_PLEASE_SELECT_THE_DATA_TO_BE_DELETED}';
+        Message.MSG_DO_YOU_WANT_TO_REMOVE_THE_SELECTED_ITEMS = '${MSG_DO_YOU_WANT_TO_REMOVE_THE_SELECTED_ITEMS}';
+        Message.MSG_DELETE_SUCCESS = '${MSG_DELETE_SUCCESS}';
+        Message.MSG_DELETE_FAILED = '${MSG_DELETE_FAILED}';
+        Message.MSG_LIST = '${MSG_LIST}';
+        Message.MSG_DATA_IS_USE = '${MSG_DATA_IS_USE}';
+        Message.MSG_WANT_TO_CANCEL_EDITING_THE_DATA_HAS_CHANGED_OR_NOT = '${MSG_WANT_TO_CANCEL_EDITING_THE_DATA_HAS_CHANGED_OR_NOT}';
+        Message.MSG_PLEASE_ENTER_ONLY_NUMBERS = '${MSG_PLEASE_ENTER_ONLY_NUMBERS}';
+        Message.MSG_PLEASE_ENTER_THE_PROGRESS_BETWEEN_0_TO_100 = '${MSG_PLEASE_ENTER_THE_PROGRESS_BETWEEN_0_TO_100}';
+        Message.MSG_DATE_INCOLLECT = '${MSG_DATE_INCOLLECT}';
+        Message.MSG_YOU_WANT_TO_SAVE_DATA = '${MSG_YOU_WANT_TO_SAVE_DATA}';
+        Message.MSG_THIS_FILE_IS_ALREADY_TO_DAVE_THE_FILE_TO_REPEAT_IT = '${MSG_THIS_FILE_IS_ALREADY_TO_DAVE_THE_FILE_TO_REPEAT_IT}';
+        Message.MSG_FILE_NOT_FOUND = '${MSG_FILE_NOT_FOUND}';
+        Message.MSG_DATA_ALL_IN_USED = '${MSG_DATA_ALL_IN_USED}';
+        Message.MSG_PLEASE_ENTER_NO_MORE_THAN_FOUR_DECIMAL_NUMBERS = '${MSG_PLEASE_ENTER_NO_MORE_THAN_FOUR_DECIMAL_NUMBERS}';
+        Message.MSG_PLEASE_ENTER_A_ONLY_POSITIVE_INTEGER_NUMBERS = '${MSG_PLEASE_ENTER_A_ONLY_POSITIVE_INTEGER_NUMBERS}';
+        Message.MSG_YOU_SELECT_A_FILE_SIZE_OVER_LIMIT = '${MSG_YOU_SELECT_A_FILE_SIZE_OVER_LIMIT}';
+        Message.MSG_IT_IS_HAS_A_SAME_NAMES = '${MSG_IT_IS_HAS_A_SAME_NAMES}';
+        Message.MSG_NOT_UPDATED_DATA_PLEASE_REFRESH_AND_CONTINUE_YOUR_TRANSACTION = '${MSG_NOT_UPDATED_DATA_PLEASE_REFRESH_AND_CONTINUE_YOUR_TRANSACTION}';
+        Message.MSG_CAN_NOT_PUT_MARK_INTO_IN_DETAILS = '${MSG_CAN_NOT_PUT_MARK_INTO_IN_DETAILS}';
+    </script>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">${LABEL_DETAILS_MODULES}</div>
+                <div class="panel-body">
+                    <div class="col-sm-10 col-sm-offset-1">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <div class="col-sm-12 col-sm-offset-2">
+                                        <label class="" style="margin-left: 9px;">${LABEL_MODULE_NEME}</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-10">
+                                    <label id="lblModuleNeme" class="" style="margin-left: 10px;"><jsp:text/></label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-sm-10 col-sm-offset-1">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-sm-5">
+                                    <div class="col-sm-4 col-sm-offset-1">
+                                        <label class="">${LABEL_INITIAL}</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label id="lblModuleInitial" class=""><jsp:text/></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-sm-10 col-sm-offset-1">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-sm-5">
+                                    <div class="col-sm-4 col-sm-offset-1">
+                                        <label class="">${LABEL_TOTAL_COST}</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label id="lblModuleCost" class=""><jsp:text/></label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5 col-sm-offset-1">
+                                    <div class="col-sm-5">
+                                        <label class="">${LABEL_BALANCE_TOTAL_COST}</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label id="lblModuleCostBalance" class=""><jsp:text/></label>
+                                    </div>
+                                </div>  
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-sm-10 col-sm-offset-1">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-sm-5">
+                                    <div class="col-sm-4 col-sm-offset-1">
+                                        <label class="">${LABEL_START_DATE}</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label id="lblModuleDateStart" class=""><jsp:text/></label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5 col-sm-offset-1">
+                                    <div class="col-sm-5">
+                                        <label class="">${LABEL_END_DATE}</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label id="lblModuleDateEnd" class=""><jsp:text/></label>
+                                    </div>
+                                </div> 
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-sm-10 col-sm-offset-1">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <div class="col-sm-12 col-sm-offset-2">
+                                        <label class="" style="margin-left: 9px;">${LABEL_MANAGER}</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-10">
+                                    <label id="lblModuleManager" class="" style="margin-left: 10px;"><jsp:text/></label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-5">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <button id="btnAddProgram" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalProgram" data-backdrop="static">${BUTTON_ADD_PROGRAM}</button>
+                        <button id="btnDeleteProgram" type="button" class="btn btn-danger" style="margin-left: 5px;">${BUTTON_REMOVE_SELECTED}</button>
+                    </div>
+                    <div id="penaltyTableContainer" class="table-responsive">
+                        <table id="TableProgram" class="table table-bordered table-stripted table-hover">
+                            <thead>
+                                <tr>
+                                    <th id="thChkAll" class="text-center">
+                                        <input id="checkboxAllProgram" type="checkbox" name="checkdDelete" />
+                                    </th>
+                                    <th id="thEditProgram" class="text-center">${LABEL_EDIT}</th>
+                                    <th id="thProgramCode" class="text-center" >${LABEL_PROGRAM_CODE}</th>
+                                    <th id="thProgramName" class="text-center" >${LABEL_PROGRAM_NAME}</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ResualtSearchProgram" style="cursor:pointer"></tbody>
+                        </table>
+                    </div>
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <component:pagging id="paggingSimpleProgram"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-7">
+            <div class="card">
+                <div class="card-body">
+                    <div id="formADTask" class="form-group" hidden="true">
+                        <button id="btnAddTask" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTask" data-backdrop="static">${BUTTON_ADD_TASK}</button>
+                        <button id="btnDeleteTask" type="button" class="btn btn-danger" style="margin-left: 5px;">${BUTTON_REMOVE_SELECTED}</button>
+                    </div>
+                    <div id="formTask" hidden="true">
+                        <div id="penaltyTableContainer" class="table-responsive">
+                            <table id="TableTask" class="table table-bordered table-stripted table-hover">
+                                <thead>
+                                    <tr>
+                                        <th id="thChkAllTask" class="text-center">
+                                            <input id="checkboxAllTask" type="checkbox" name="checkdDelete" />
+                                        </th>
+                                        <th id="thEditTask" class="text-center">${LABEL_EDIT}</th>
+                                        <th id="thTaskCode" class="text-center" >${LABEL_TASK_CODE}</th>
+                                        <th id="thTaskName" class="text-center" >${LABEL_TASK_NAME}</th>
+                                        <th id="thNumberCost" class="text-center" >${LABEL_TOTAL_COST}</th>
+                                        <th id="thProgress" class="text-center" >${LABEL_PROGRESS}</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ResualtSearchTask" style="cursor:pointer"></tbody>
+                            </table>
+                        </div>
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <component:pagging id="paggingSimpleTask"/>
+                            </div>
+                        </div>
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label class="">${LABEL_TASK_FOLLOWER}</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <label id="lblTaskFollower" class=""><jsp:text/></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label class="">${LABEL_MANAGER}</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <label id="lblEmpName" class=""><jsp:text/></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label class="">${LABEL_TYPE_TASK}</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <label id="lblTaskName" class=""><jsp:text/></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label class="">${LABEL_TASK_IMPORTANCE}</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <label id="lblTaskImportance" class=""><jsp:text/></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label class="">${LABEL_START_DATE}</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <label id="lblSDate" class=""><jsp:text/></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label class="">${LABEL_END_DATE}</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <label id="lblEDate" class=""><jsp:text/></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label class="">${LABEL_ATTACHMENTS}</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <button id="btnDownloadFile" type="button" class="btn btn-primary">${BUTTON_DOWNLOAD_FILE}</button>
+                                    <label id="lblFileName" class="" data-toggle="tooltip" style="margin-left: 10px; cursor:pointer;"><jsp:text/></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label class="">${LABEL_DETAILS}</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <textarea id="txtaDetail" class="" rows="5" style="width: 80%;" readonly="true"><jsp:text/></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalProgram" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary">
+                        <h4 class="modal-title">${LABEL_ADD_PROGRAM}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-sm-offset-1 col-sm-3">
+                                    <label class="control-label required">${LABEL_PROGRAM_CODE}</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" maxlength="255" class="form-control" id="txtProgramCode" data-placement="bottom" placeholder="รหัสโปรแกรม" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-1 col-sm-3">
+                                    <label class="control-label required">${LABEL_PROGRAM_NAME}</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" maxlength="255" class="form-control" id="txtProgramName" data-placement="bottom" placeholder="ชื่อโปรแกรม" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btnModalProgramAdd" type="button" class="btn btn-primary">${BUTTON_SAVE}</button>
+                        <button id="btnModalProgramNext" type="button" class="btn btn-primary">${BUTTON_NEXT}</button>
+                        <button id="btnModalProgramCancel" type="button" class="btn btn-primary">${BUTTON_CANCEL}</button>
+                        <br/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modalTask" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary">
+                        <h4 class="modal-title">${LABEL_ADD_TASK}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-sm-offset-1 col-sm-3">
+                                    <label class="control-label required">${LABEL_TASK_CODE}</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" maxlength="255" class="form-control" id="txtTaskCode" data-placement="bottom" placeholder="${LABEL_TASK_CODE}" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-1 col-sm-3">
+                                    <label class="control-label required">${LABEL_TASK_NAME}</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" maxlength="255" class="form-control" id="txtTaskName" data-placement="bottom" placeholder="${LABEL_TASK_NAME}" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-1 col-sm-3">
+                                    <label class="control-label required">${LABEL_TOTAL_COST}</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="input-group">
+                                        <input type="text" maxlength="12" class="form-control" id="txtTaskCost" data-placement="bottom" placeholder="${LABEL_TOTAL_COST}" />
+                                        <span class="input-group-addon">${LABEL_POINT}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <label class="control-label ">${LABEL_BALANCE_TOTAL_COST}</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="txtBalancTaskCost" data-placement="bottom" readonly="true"/>
+                                        <span class="input-group-addon">${LABEL_POINT}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-1 col-sm-3">
+                                    <label class="control-label required">${LABEL_TYPE_TASK}</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="dropdown">
+                                        <select class="form-control" id="ddlTypeTask"
+                                        data-placement="bottom" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><jsp:text/><span class="caret"></span>
+                                   </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-1 col-sm-3">
+                                    <label class="control-label required">${LABEL_TASK_IMPORTANCE}</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="dropdown">
+                                        <select class="form-control" id="ddlTaskImportance"
+                                        data-placement="bottom" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><jsp:text/><span class="caret"></span>
+                                   </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-1 col-sm-3">
+                                    <label class="control-label">${LABEL_TASK_FOLLOWER}</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <component:LovEmployee id="txtEmpNameTaskFollower1" controller="findEmpCodeByModuleProjectId" moduleProject="${moduleProjectID}"/>
+                                </div>
+                                <span id="subTaskFollower"><!--Not Empty--></span>
+                            </div>                      
+                            <div class="form-group">
+                                <div class="col-sm-offset-4 col-sm-6">
+                                    <button id="btnAddLovEmployee" type="button" class="btn btn-success"> + ${LABEL_TASK_FOLLOWER}</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-1 col-sm-3">
+                                    <label class="control-label ">${LABEL_MANAGER}</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <component:LovEmployee id="txtEmpName" controller="findEmpCodeByModuleProjectId" moduleProject="${moduleProjectID}"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-1 col-sm-3">
+                                    <label class="control-label">${LABEL_START_DATE}</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="input-group">
+                                        <input data-placement="bottom" type="text"  class="form-control" id="dateStartProject" placeholder="dd/mm/yyyy" />
+                                        <span id="dateStartSpan" class="input-group-addon" style="cursor:pointer">
+                                            <span class="glyphicon glyphicon-calendar" ></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-1 col-sm-3">
+                                    <label class="control-label">${LABEL_END_DATE}</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="input-group">
+                                        <input data-placement="bottom" type="text" class="form-control" id="dateEndProject" placeholder="dd/mm/yyyy" />
+                                        <span id="dateEndSpan" class="input-group-addon" style="cursor:pointer">
+                                            <span class="glyphicon glyphicon-calendar" ></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-1 col-sm-3">
+                                    <label class="control-label ">${LABEL_PROGRESS}</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="txtProgress" data-placement="bottom" placeholder="${LABEL_PROGRESS}" readonly="true"/>
+                                        <span class="input-group-addon">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-1 col-sm-3">
+                                    <label class="control-label">${LABEL_ATTACHMENTS}</label>
+                                </div>
+                                <div class="col-sm-2">
+                                    <button id="btnSelectFile" type="button" class="btn btn-primary" onclick="$('#myInput').click();">${BUTTON_SELECT_FILE}</button>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label id="fileName" class="control-label" data-toggle="tooltip" style="cursor:pointer" ><jsp:text/></label>
+                                </div>
+                                <div class="col-sm-1">
+                                    <input id="myInput" type="file" style="visibility:hidden" />
+                                </div>
+                                <br/>
+                                <div class="col-sm-4">
+                                    <label class="control-label" style="color: #FF0000; font-size: 10px;">${LABEL_FILE_SIZE_OF_NO_MORE_THAN_100_MB}</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-1 col-sm-3">
+                                    <label class="control-label ">${LABEL_DETAILS}</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <textarea id="txtaDescription" maxlength="255" class="" rows="5" style="width: 100%;" ><jsp:text/></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btnModalTaskAdd" type="button" class="btn btn-primary">${BUTTON_SAVE}</button>
+                        <button id="btnModalTaskNext" type="button" class="btn btn-primary">${BUTTON_NEXT}</button>
+                        <button id="btnModalTaskCancel" type="button" class="btn btn-primary">${BUTTON_CANCEL}</button>
+                        <br/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var contextPath = '${pageContext.request.contextPath}';
+    </script>
+
+    <spring:url value="/resources/scripts/component/UtilLovEmp.js" var="UtilLovEmp"/>
+    <script src="${UtilLovEmp}" type="text/javascript"><!--Not Empty --></script>
+
+    <spring:url value="/resources/scripts/component/UtilDate.js" var="UtilDate"/>
+    <script src="${UtilDate}" type="text/javascript"><!--Not Empty --></script>
+
+    <spring:url value="/resources/scripts/component/UtilForm.js" var="UtilForm"/>
+    <script src="${UtilForm}" type="text/javascript"><!--Not Empty --></script>
+
+    <spring:url value="/resources/scripts/ModuleProject/detailsModule.js" var="detailsModule" />
+    <script src="${detailsModule}" type="text/javascript"><!--Not Empty --></script>
+
+    <spring:url value="/resources/scripts/component/UtilPagination.js" var="UtilPagination"/>
+    <script src="${UtilPagination}" type="text/javascript"><!--Not Empty --></script>
+
+    <spring:url value="/resources/scripts/ModuleProject/detailsModuleProgram.js" var="detailsModuleProgram" />
+    <script src="${detailsModuleProgram}" type="text/javascript"><!--Not Empty --></script>
+
+    <spring:url value="/resources/scripts/component/UtilPagination.js" var="UtilPagination"/>
+    <script src="${UtilPagination}" type="text/javascript"><!--Not Empty --></script>
+
+    <spring:url value="/resources/scripts/ModuleProject/detailsModuleTask.js" var="detailsModuleTask" />
+    <script src="${detailsModuleTask}" type="text/javascript"><!--Not Empty --></script>
+
+    <!-- Script Calendar -->
+    <spring:url value="/resources/scripts/fullcalendar/lib/moment.min.js" var="moment_js"/>
+    <spring:url value="/resources/scripts/fullcalendar/fullcalendar.min.js" var="fullcalendar_js"/>
+    <script src="${moment_js}" type="text/javascript"><!--Not Empty --></script>
+    <script src="${fullcalendar_js}" type="text/javascript"><!--Not Empty --></script>
+</div>
